@@ -1,4 +1,11 @@
-import { mkdirSync, existsSync, readFileSync, writeFileSync, rmSync } from "fs";
+import {
+  mkdirSync,
+  existsSync,
+  readFileSync,
+  writeFileSync,
+  rmSync,
+  stat,
+} from "fs";
 import { join } from "path";
 import { GitHubService } from "./github-service.js";
 import { GitService } from "./git-service.js";
@@ -10,6 +17,7 @@ import {
   Config,
   TemplateData,
 } from "./types.js";
+import { statusLabels } from "./config.js";
 
 export class AIOEngine {
   private githubService: GitHubService;
@@ -118,27 +126,26 @@ export class AIOEngine {
   private determineState(data: WorkPackageData): AIOState {
     const labels = data.issue.labels.map((l) => l.name);
     console.log(`Issue #${data.issue.number} has labels: ${labels.join(", ")}`);
-
-    if (labels.includes("ready-to-merge")) {
+    if (labels.includes(statusLabels.mergeable)) {
       return "READY-TO-MERGE";
     }
 
-    if (labels.includes("in-review")) {
+    if (labels.includes(statusLabels.reviewable)) {
       const qaPath = join(process.cwd(), data.workPackageName, "qa.md");
       if (existsSync(qaPath)) {
         return "REVIEW-FEEDBACK";
       }
     }
 
-    if (labels.includes("plan-approved")) {
+    if (labels.includes(statusLabels.approved)) {
       return "PLAN-APPROVED";
     }
 
-    if (labels.includes("plan-proposed") && data.comments.length > 0) {
+    if (labels.includes(statusLabels.proposed) && data.comments.length > 0) {
       return "PLAN-FEEDBACK";
     }
 
-    if (labels.includes("ready-for-agent")) {
+    if (labels.includes(statusLabels.ready)) {
       return "BOOTSTRAP";
     }
 
@@ -180,14 +187,12 @@ export class AIOEngine {
     // Remove ready-for-agent label and add plan-proposed and locked
     await this.githubService.removeLabelFromIssue(
       data.issue.number,
-      "ready-for-agent"
+      statusLabels.ready
     );
     await this.githubService.addLabelToIssue(
       data.issue.number,
-      "plan-proposed"
+      statusLabels.proposed
     );
-    await this.githubService.addLabelToIssue(data.issue.number, "locked");
-
     // Output prompt
     this.outputPrompt(templateData);
   }
@@ -217,10 +222,12 @@ export class AIOEngine {
     // Remove plan-approved and add in-review and locked
     await this.githubService.removeLabelFromIssue(
       data.issue.number,
-      "plan-approved"
+      statusLabels.approved
     );
-    await this.githubService.addLabelToIssue(data.issue.number, "in-review");
-    await this.githubService.addLabelToIssue(data.issue.number, "locked");
+    await this.githubService.addLabelToIssue(
+      data.issue.number,
+      statusLabels.reviewable
+    );
 
     // Create or override TASK.md
     const templateData = this.createTemplateData(data);
@@ -246,15 +253,6 @@ export class AIOEngine {
 
     await this.commitAndPush(data, "chore(aio): report fixes required");
     this.outputPrompt(templateData);
-    // CI is green - remove locked label and post QA comment
-    try {
-      await this.githubService.removeLabelFromIssue(
-        data.issue.number,
-        "locked"
-      );
-    } catch (error) {
-      // noop - continue if label removal fails
-    }
   }
 
   private async handleReadyToMerge(data: WorkPackageData): Promise<void> {
@@ -289,7 +287,9 @@ export class AIOEngine {
     // Commit and push the changes
     this.gitService.addAllFiles();
     if (this.gitService.hasUncommittedChanges()) {
-      this.gitService.commit(`chore: cleanup issue flow files for #${data.issue.number}`);
+      this.gitService.commit(
+        `chore: cleanup issue flow files for #${data.issue.number}`
+      );
       this.gitService.push();
       console.log("Committed and pushed cleanup changes");
     }
@@ -303,7 +303,7 @@ export class AIOEngine {
   private async handleUndetermined(data: WorkPackageData): Promise<void> {
     console.log(`Issue #${data.issue.number} is in an undetermined state.`);
     console.log(
-      "If you want an AI Agent to work on it, please add the label 'ready-for-agent' to the Github Ticket and re-run the script!"
+      "If you want an AI Agent to work on it, please add the label 'ready' to the Github Ticket and re-run the script!"
     );
   }
 
