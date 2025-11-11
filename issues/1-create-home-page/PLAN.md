@@ -6,7 +6,7 @@
 
 ## Summary
 
-Create a central single-page playground that showcases the future base component (`<Cask/>`) and theming system capabilities. The page will demonstrate regular content, always-dark sections, always-light sections, and nested themed areas.
+Create a central single-page playground with pure HTML structure that will serve as the foundation for future base component (`<Cask/>`) integration. The page will contain semantic HTML content sections with proper heading hierarchy and placeholder content.
 
 ## Scope
 
@@ -15,15 +15,15 @@ Create a central single-page playground that showcases the future base component
 - Implement the required content structure with semantic HTML
 - Add proper heading hierarchy (h1, h2, h3)
 - Include Lorem Ipsum placeholder content
-- Create nested content areas for theme demonstration
-- Ensure proper component structure for future Cask integration
+- Create nested content areas with semantic HTML structure
+- Ensure clean HTML foundation for future component integration
 
 ### Out of Scope
 - Actual Cask component implementation (future task)
-- Theming system implementation (future task)
-- Styling with Next Yak (future task)
+- Any styling or theming implementation (future task)
 - Interactive functionality
-- Responsive design (basic structure only)
+- CSS styling beyond basic HTML structure
+- Responsive design considerations
 
 ## File/Directory Map
 
@@ -43,14 +43,14 @@ Create a central single-page playground that showcases the future base component
 
 2. **Content Sections**:
    - ✅ Regular Content: h2 + 2 sentences Lorem Ipsum
-   - ✅ Always Dark: h2 + 2 sentences Lorem Ipsum  
-   - ✅ Always Light: h2 + 2 sentences Lorem Ipsum
+   - ✅ Always Dark: h2 + 2 sentences Lorem Ipsum (HTML structure only)
+   - ✅ Always Light: h2 + 2 sentences Lorem Ipsum (HTML structure only)
    - ✅ Nested Areas: h2 + div with 3 child sections
 
 3. **Nested Child Sections**:
    - ✅ Regular Child Content: h3 heading
-   - ✅ Always Dark Child: h3 heading
-   - ✅ Always Light Child: h3 heading
+   - ✅ Always Dark Child: h3 heading (HTML structure only)
+   - ✅ Always Light Child: h3 heading (HTML structure only)
 
 4. **Technical Requirements**:
    - ✅ Valid semantic HTML structure
@@ -96,8 +96,8 @@ No CI updates required - existing Next.js build and lint processes will validate
 
 ## Documentation Updates
 
-No documentation updates required for this basic content structure. Future theming system integration may require:
-- ADR for theming architecture decisions
+No documentation updates required for this basic HTML structure. Future implementation phases may require:
+- ADR for component architecture decisions
 - Component documentation for Cask implementation
 
 ---
