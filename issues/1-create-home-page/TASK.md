@@ -1,4 +1,4 @@
-# CurrentTask: Work on Feedback for Plan
+# CurrentTask: Implement Task
 
 - **ID**: `#1`
 - **Title**: `Create Home Page`
@@ -6,42 +6,16 @@
 
 ## Task Description
 
-- Read the text below, especially the "Feedback Comments" section.
-- Update the existing implementation plan in `issues/1-create-home-page/PLAN.md` based on the feedback provided.
-- Ensure that all relevant feedback is addressed in the updated plan.
-- Append a line to `issues/1-create-home-page/cost.md` with:
+- A detailed plan has already been worked out in a previous step. Your task is to implement everything specified in `issues/1-create-home-page/PLAN.md`.
+- Modify only code/docs/tests required by the plan.
+- Create or update `issues/1-create-home-page/qa.md` with a consistent but minimal QA checklist / test plan. 
+  - Omit steps that are tested automatically (like linters)
+  - Try to create a recipe-like order starting with running the app locally, navigationg to a url, etc.
+- After the implementation, append a line to `issues/1-create-home-page/cost.md` with:
   - timestamp (UTC), provider, model, input_tokens, output_tokens, total_tokens, estUSD, headers snapshot (remaining/reset if available).
-- Do **not** modify other files.
+- Do **not** change `PLAN.md`.
 - create a local commit if possible. If not propose a commit statement including message.
 
-## Issue Summary
-
-__Create Home Page__
-
-### Summary
-
-I want to create a central single page that acts as the playgound for the future implementations.
-
-It should contain:
-- headline 1: `&lt;Cask/&gt;` - The Crate Base Component
-- a content div
-- in there four other divs
-  - h2: Regular Content, p: two sentences of Lorem Ipsum
-  - h2: Always Dark, p: two sentences of Lorem Ipsum
-  - h2: Always Light, p: two sentences of Lorem Ipsum
-  - h2: Nested Areas, div with 3 inner divs
-    - h3: Regular Child Content
-    - h3: Always Dark Child
-    - h3: Always Light Child 
-
-### Acceptance criteria
-
-_No response_
-
-### Additional context
-
-_No response_
-Labels: proposed
 
 ## Feedback Comments
 
@@ -49,9 +23,7 @@ __Comment on issues/1-create-home-page/PLAN.md line 42__
 Theming comes later. Please adhere to the pure html structure for now..
 
 
-
 ## Pull Request Information
-
 - **PR ID**: `#2`
 - **Title**: `agent(#1): Create Home Page`
 - **State**: `open`
