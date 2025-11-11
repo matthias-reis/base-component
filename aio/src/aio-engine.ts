@@ -118,27 +118,26 @@ export class AIOEngine {
   private determineState(data: WorkPackageData): AIOState {
     const labels = data.issue.labels.map((l) => l.name);
     console.log(`Issue #${data.issue.number} has labels: ${labels.join(", ")}`);
-
-    if (labels.includes("ready-to-merge")) {
+    if (labels.includes("mergeable")) {
       return "READY-TO-MERGE";
     }
 
-    if (labels.includes("in-review")) {
+    if (labels.includes("reviewable")) {
       const qaPath = join(process.cwd(), data.workPackageName, "qa.md");
       if (existsSync(qaPath)) {
         return "REVIEW-FEEDBACK";
       }
     }
 
-    if (labels.includes("plan-approved")) {
+    if (labels.includes("approved")) {
       return "PLAN-APPROVED";
     }
 
-    if (labels.includes("plan-proposed") && data.comments.length > 0) {
+    if (labels.includes("proposed") && data.comments.length > 0) {
       return "PLAN-FEEDBACK";
     }
 
-    if (labels.includes("ready-for-agent")) {
+    if (labels.includes("ready")) {
       return "BOOTSTRAP";
     }
 
@@ -289,7 +288,9 @@ export class AIOEngine {
     // Commit and push the changes
     this.gitService.addAllFiles();
     if (this.gitService.hasUncommittedChanges()) {
-      this.gitService.commit(`chore: cleanup issue flow files for #${data.issue.number}`);
+      this.gitService.commit(
+        `chore: cleanup issue flow files for #${data.issue.number}`
+      );
       this.gitService.push();
       console.log("Committed and pushed cleanup changes");
     }
