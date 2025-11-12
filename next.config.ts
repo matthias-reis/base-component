@@ -1,9 +1,10 @@
 import type { NextConfig } from "next";
+import { withYak } from "next-yak/withYak";
 
 const nextConfig: NextConfig = {
   turbopack: {
-    root: "."
-  }
+    root: __dirname,
+  },
 };
 
-export default nextConfig;
+export default withYak(nextConfig);
