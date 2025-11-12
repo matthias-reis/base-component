@@ -2,3 +2,5 @@
 
 ## Work Package: issues/4-base-component-called-cask
 timestamp (UTC), provider, model, input_tokens, output_tokens, total_tokens, estUSD, headers snapshot.
+
+2025-11-12T00:00:00Z, anthropic, claude-sonnet-4-20250514, ~8000, ~2500, ~10500, ~$0.50, N/A
