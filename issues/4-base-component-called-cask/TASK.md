@@ -1,4 +1,4 @@
-# CurrentTask: Implement Task
+# CurrentTask: Work on Feedback for Implementation
 
 - **ID**: `#4`
 - **Title**: `Base Component called Cask`
@@ -6,14 +6,12 @@
 
 ## Task Description
 
-- A detailed plan has already been worked out in a previous step. Your task is to implement everything specified in `issues/4-base-component-called-cask/PLAN.md`.
-- Modify only code/docs/tests required by the plan.
-- Create or update `issues/4-base-component-called-cask/qa.md` with a consistent but minimal QA checklist / test plan. 
-  - Omit steps that are tested automatically (like linters)
-  - Try to create a recipe-like order starting with running the app locally, navigationg to a url, etc.
-- After the implementation, append a line to `issues/4-base-component-called-cask/cost.md` with:
+- A detailed plan has already been worked out and implemented, see `issues/4-base-component-called-cask/PLAN.md` for more details. But there is feedback to address.
+- Read the text below, especially the "Feedback Comments" and the "CI Status" section.
+- Ensure that all relevant feedback is addressed in the codebase.
+- Do **not** modify the plan.md as this has been previously approved.
+- Append a line to `issues/4-base-component-called-cask/cost.md` with:
   - timestamp (UTC), provider, model, input_tokens, output_tokens, total_tokens, estUSD, headers snapshot (remaining/reset if available).
-- Do **not** change `PLAN.md`.
 - create a local commit if possible. If not propose a commit statement including message.
 
 
@@ -31,7 +29,13 @@ import {Cask} from &#39;@/src/cask&#39;
 ```.
 
 
+## CI Status
+
+__tests__: ❌
+__build__: ✅
+
 ## Pull Request Information
+
 - **PR ID**: `#8`
 - **Title**: `agent(#4): Base Component called Cask`
 - **State**: `open`
