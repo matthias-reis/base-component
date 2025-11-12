@@ -1,9 +1,11 @@
 import type { NextConfig } from "next";
+import { withYak } from "next-yak/withYak";
 
 const nextConfig: NextConfig = {
-  turbopack: {
-    root: "."
-  }
+  // Disable turbopack for Next Yak compatibility
+  // turbopack: {
+  //   root: "."
+  // }
 };
 
-export default nextConfig;
+export default withYak(nextConfig);

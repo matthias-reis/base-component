@@ -16,7 +16,7 @@ This repo is supposed to host a showcase for two features
 ## Frontend
 
 - Next JS handles basic app bootstrapping and serves only one single page
-- Next Yak is the library that we use for styling.
+- Next Yak is the CSS-in-JS styling library that provides build-time CSS extraction and styled-components-like API
 
 ## For Agents
 
