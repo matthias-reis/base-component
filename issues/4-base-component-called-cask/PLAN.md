@@ -9,7 +9,7 @@ Create the first iteration of a `Cask` component - a generic container component
 ### In Scope
 - Create `src/cask/` folder with colocated component and test files
 - Implement `Cask` component with polymorphic `as` prop functionality
-- Set up unit testing framework (Jest + React Testing Library)
+- Set up unit testing framework (Vitest + React Testing Library)
 - Add test scripts to package.json and GitHub Actions CI workflow
 - Implement comprehensive unit tests covering:
   - Default rendering as `div`
@@ -43,9 +43,10 @@ src/
 
 ### New Dependencies
 - `@testing-library/react` - React component testing utilities
-- `@testing-library/jest-dom` - Jest DOM matchers
-- `jest` - Testing framework
-- `jest-environment-jsdom` - JSDOM environment for React testing
+- `@testing-library/jest-dom` - Jest DOM matchers for Vitest
+- `vitest` - Testing framework
+- `@vitejs/plugin-react` - Vite plugin for React support
+- `jsdom` - JSDOM environment for React testing
 
 ## Acceptance Criteria
 
@@ -54,10 +55,11 @@ src/
 - [ ] `as` prop allows rendering as any valid HTML element
 - [ ] All props are properly forwarded to the underlying element
 - [ ] Component maintains TypeScript type safety with proper polymorphic typing
-- [ ] Component exports are available from `src/cask/index.ts`
+- [ ] Component is exported as named export from `src/cask/index.ts` (not default export)
+- [ ] Component is importable via `import {Cask} from '@/src/cask'`
 
 ### Testing Requirements
-- [ ] Unit testing framework is configured and functional
+- [ ] Vitest testing framework is configured and functional
 - [ ] Test scripts added to package.json (`test`, `test:watch`)
 - [ ] GitHub Actions CI includes test execution
 - [ ] Unit tests cover:
@@ -107,8 +109,8 @@ src/
 ### Technical Risks
 - **TypeScript Complexity**: Polymorphic component typing can be complex
   - *Mitigation*: Start with simple implementation, iterate based on needs
-- **Testing Setup**: First-time Jest configuration with Next.js may have conflicts
-  - *Mitigation*: Use Next.js recommended testing setup, follow official documentation
+- **Testing Setup**: First-time Vitest configuration with Next.js may require custom setup
+  - *Mitigation*: Use Vitest with Next.js configuration, follow official documentation
 
 ### Project Risks
 - **Scope Creep**: Component requirements may expand during implementation
@@ -121,7 +123,8 @@ If implementation fails or causes issues:
 2. Revert package.json changes (remove testing dependencies/scripts)
 3. Revert CI workflow changes
 4. Revert documentation updates
-5. Ensure build and existing functionality remain intact
+5. Remove any ADR entries created for this work package
+6. Ensure build and existing functionality remain intact
 
 ## CI Updates
 
@@ -137,8 +140,8 @@ Add to package.json:
 ```json
 {
   "scripts": {
-    "test": "jest",
-    "test:watch": "jest --watch",
+    "test": "vitest run",
+    "test:watch": "vitest",
     "typecheck": "tsc --noEmit"
   }
 }
@@ -155,8 +158,12 @@ Add to package.json:
 - Update `src/` section to include `src/cask/` folder
 - Explain component colocation strategy
 
-### ADR Consideration
-If testing framework choice requires architectural decision documentation, consider creating `docs/ADR/0003-testing-framework-adoption.md` to record Jest selection rationale.
+### ADR Requirements
+This implementation requires two new ADR entries:
+
+1. **Testing Framework ADR**: Create `docs/ADR/0003-testing-framework-adoption.md` to document the selection of Vitest over Jest, including rationale for the choice and integration approach.
+
+2. **Architecture Changes ADR**: Create `docs/ADR/0004-cask-component-architecture.md` to document the introduction of the polymorphic Cask component as a design system primitive, including design decisions and patterns established.
 
 ## Implementation Notes
 
