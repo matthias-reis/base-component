@@ -1,16 +1,14 @@
-# Current Task: Create Plan
+# CurrentTask: Work on Feedback for Plan
 
 - **ID**: `#4`
 - **Title**: `Base Component called Cask`
 - **Workpackage Name**: `issues/4-base-component-called-cask`
 
-## Task description
+## Task Description
 
-- Read the **Issue Summary** below and produce a detailed implementation plan.
-- Write a single Markdown file: `issues/4-base-component-called-cask/PLAN.md`.
-- Include: Summary, Scope, Out-of-scope, File/dir map, Acceptance Criteria, Test Plan, Risks, Rollback, CI updates, Docs updates.
-- Link to SoT docs instead of copying content.
-- In case of architectural changes or added dependencies, consider an addition to the ADR and mention it in the `PLAN.md` docs update section
+- Read the text below, especially the "Feedback Comments" section.
+- Update the existing implementation plan in `issues/4-base-component-called-cask/PLAN.md` based on the feedback provided.
+- Ensure that all relevant feedback is addressed in the updated plan.
 - Append a line to `issues/4-base-component-called-cask/cost.md` with:
   - timestamp (UTC), provider, model, input_tokens, output_tokens, total_tokens, estUSD, headers snapshot (remaining/reset if available).
 - Do **not** modify other files.
@@ -22,7 +20,7 @@ __Base Component called Cask__
 
 ### Summary
 
-Now it's time for the core showcase feature. Create the first iteration of the `Cask` component,
+Now it&#39;s time for the core showcase feature. Create the first iteration of the `Cask` component,
 
 Create this component in a separate folder `src/cask`.
 
@@ -33,8 +31,8 @@ What does the component do?
 - Make sure that all features of the used tag are still applicable
 
 Examples:
-- `<Cask as='section'>foo</Cask>` would render `<section>foo</section>`
-- `<Cask as='a' href='https://github.com'>To Github</Cask> would render a link to Github.
+- `&lt;Cask as=&#39;section&#39;&gt;foo&lt;/Cask&gt;` would render `&lt;section&gt;foo&lt;/section&gt;`
+- `&lt;Cask as=&#39;a&#39; href=&#39;https://github.com&#39;&gt;To Github&lt;/Cask&gt; would render a link to Github.
 
 ### Acceptance criteria
 
@@ -51,6 +49,27 @@ Examples:
 ### Additional context
 
 _No response_
-Labels: ready
+Labels: proposed
+
+## Feedback Comments
+
+__Comment on issues/4-base-component-called-cask/PLAN.md line 12__ 
+Please use vitest instead of Jest and make sure you mention the architecture addition in a new ADR entry.
+__Comment on issues/4-base-component-called-cask/PLAN.md line 19__ 
+Also here add an ADR entry on top of the architecture changes.
+__Comment on issues/4-base-component-called-cask/PLAN.md line 33__ 
+Please mention that it&#39;s not the default export
+
+The component should be usable like so:
+
+```
+import {Cask} from &#39;@/src/cask&#39;
+```.
 
 
+
+## Pull Request Information
+
+- **PR ID**: `#8`
+- **Title**: `agent(#4): Base Component called Cask`
+- **State**: `open`
