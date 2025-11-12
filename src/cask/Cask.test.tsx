@@ -1,5 +1,5 @@
+/// <reference types="vitest/globals" />
 import { render, screen, cleanup } from '@testing-library/react'
-import { describe, it, expect, afterEach } from 'vitest'
 import { Cask } from './Cask'
 
 afterEach(() => {
