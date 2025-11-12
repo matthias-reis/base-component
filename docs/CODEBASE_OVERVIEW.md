@@ -11,5 +11,6 @@
 
 - `src/app/globals.css` — Global styles and css variable definitions outside next yak
 - `src/components` — design system components
+- `src/cask` — Core Cask component (polymorphic container primitive) with colocated tests
 
 Keep this file synchronized with structural changes and ensure agent context files under `.context/` refer back here for directory explanations.
