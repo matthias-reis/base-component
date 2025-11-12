@@ -18,6 +18,12 @@ This repo is supposed to host a showcase for two features
 - Next JS handles basic app bootstrapping and serves only one single page
 - Next Yak is the CSS-in-JS styling library that provides build-time CSS extraction and styled-components-like API
 
+## Package Management
+
+- **pnpm** is the package manager for this project
+- Use `pnpm` commands instead of `npm` for all operations (install, run scripts, etc.)
+- The project includes `pnpm-lock.yaml` for dependency locking
+
 ## For Agents
 
 - Treat this file and the linked SoT documents as canonical guidance—do not duplicate content in provider-specific contexts.

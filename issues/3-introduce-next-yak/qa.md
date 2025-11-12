@@ -3,7 +3,7 @@
 ## Manual Testing Steps
 
 ### 1. Application Startup
-- [ ] Run `pnpm dev` (or `npm run dev`)
+- [ ] Run `pnpm dev`
 - [ ] Verify application starts without errors on port 4242
 - [ ] Check console for any build warnings or Next Yak configuration issues
 
@@ -30,7 +30,7 @@
 - [ ] Check that Card styling doesn't interfere with internal typography
 
 ### 5. Build Verification
-- [ ] Run `pnpm build` (or `npm run build`)
+- [ ] Run `pnpm build`
 - [ ] Verify build completes successfully
 - [ ] Check that Next Yak CSS is properly extracted during build process
 
