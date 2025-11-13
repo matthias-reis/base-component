@@ -126,6 +126,11 @@ export class AIOEngine {
   private determineState(data: WorkPackageData): AIOState {
     const labels = data.issue.labels.map((l) => l.name);
     console.log(`Issue #${data.issue.number} has labels: ${labels.join(", ")}`);
+    console.log(
+      `Comments: ${data.comments.length}, PR: ${
+        data.pullRequest ? "yes" : "no"
+      }`
+    );
     if (labels.includes(statusLabels.mergeable)) {
       return "READY-TO-MERGE";
     }

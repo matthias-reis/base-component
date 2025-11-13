@@ -1,16 +1,14 @@
-# Current Task: Create Plan
+# CurrentTask: Work on Feedback for Plan
 
 - **ID**: `#9`
 - **Title**: `Margin and Padding on base component`
 - **Workpackage Name**: `issues/9-margin-and-padding-on-base-component`
 
-## Task description
+## Task Description
 
-- Read the **Issue Summary** below and produce a detailed implementation plan.
-- Write a single Markdown file: `issues/9-margin-and-padding-on-base-component/PLAN.md`.
-- Include: Summary, Scope, Out-of-scope, File/dir map, Acceptance Criteria, Test Plan, Risks, Rollback, CI updates, Docs updates.
-- Link to SoT docs instead of copying content.
-- In case of architectural changes or added dependencies, consider an addition to the ADR and mention it in the `PLAN.md` docs update section
+- Read the text below, especially the "Feedback Comments" section.
+- Update the existing implementation plan in `issues/9-margin-and-padding-on-base-component/PLAN.md` based on the feedback provided.
+- Ensure that all relevant feedback is addressed in the updated plan.
 - Append a line to `issues/9-margin-and-padding-on-base-component/cost.md` with:
   - timestamp (UTC), provider, model, input_tokens, output_tokens, total_tokens, estUSD, headers snapshot (remaining/reset if available).
 - Do **not** modify other files.
@@ -22,7 +20,7 @@ __Margin and Padding on base component__
 
 ### Summary
 
-The cask base components now should receive its first feature, configuration based margins. Generally the idea is to apply props like so <Cask ml='xl'>content and it would translate to css.
+The cask base components now should receive its first feature, configuration based margins. Generally the idea is to apply props like so &lt;Cask ml=&#39;xl&#39;&gt;content and it would translate to css.
 
 #### Available Props
 
@@ -61,6 +59,21 @@ _No response_
 ### Additional context
 
 _No response_
-Labels: ready
+Labels: proposed
+
+## Feedback Comments
+
+__Comment on issues/9-margin-and-padding-on-base-component/PLAN.md line 42__ 
+Mention the values - i.e. copy them from the task. The plan.md is supposed to be a self sufficient description of the task - so all relevant information must be in there..
+__Comment on issues/9-margin-and-padding-on-base-component/PLAN.md line 44__ 
+One value seems to be missing. There is a css variable called &quot;--space&quot; with 1px.
+
+You can add it as &quot;1&quot; to the prop values. Probably you should add a table that connects the css value and the prop to make it clearer..
 
 
+
+## Pull Request Information
+
+- **PR ID**: `#10`
+- **Title**: `agent(#9): Margin and Padding on base component`
+- **State**: `open`
