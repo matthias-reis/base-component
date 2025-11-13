@@ -17,23 +17,12 @@
 
 ## Feedback Comments
 
-__Comment on src/cask/Cask.tsx line 34__ 
-IMPORTANT CHANGE:
-
-This was not the intention.
-Please name use of next Yak styling for applying those values. This is important because in the next step we are going to introduce mediaqueries, which don&#39;t work with inline styles.
-
-So to make it clear:
-
-`pb=&#39;s&#39;` applies a style like
-
-```
-css`
-  padding-bottom: var(--spaceS);
-`
-```.
 
 
+## CI Status
+
+__tests__: ✅
+__build__: ✅
 
 ## Pull Request Information
 
