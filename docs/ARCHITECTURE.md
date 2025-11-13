@@ -48,6 +48,13 @@ The Cask component serves as a foundational design system primitive with the fol
 - **Flexible**: Replaces basic container elements (`div`, `span`, etc.) with a single component
 - **Default behavior**: Renders as `div` when no `as` prop is specified
 - **Props forwarding**: All HTML attributes are properly forwarded to the underlying element
+- **Spacing System**: Built-in margin and padding props using CSS variables
+
+#### Spacing Props
+The component includes a comprehensive spacing system with 14 props:
+- **Margin**: `m`, `ml`, `mr`, `mt`, `mb`, `mx` (inline), `my` (block)
+- **Padding**: `p`, `pl`, `pr`, `pt`, `pb`, `px` (inline), `py` (block)
+- **Values**: `0`, `1`, `xxs`, `xs`, `s`, `m`, `l`, `xl`, `xxl`, `3xl`, `4xl`, `5xl`, `6xl`
 
 #### Usage
 ```tsx
@@ -63,9 +70,14 @@ import { Cask } from '@/src/cask'
 // Interactive elements with proper typing
 <Cask as="button" onClick={handler}>Click me</Cask>
 <Cask as="a" href="https://example.com">Link</Cask>
+
+// With spacing
+<Cask m="l" p="xl">Spaced content</Cask>
+<Cask mx="m" py="s">Directional spacing</Cask>
+<Cask as="section" p="l" mb="xl">Semantic with spacing</Cask>
 ```
 
-See [ADR 0004](./ADR/0004-cask-component-architecture.md) for detailed design decisions.
+See [ADR 0004](./ADR/0004-cask-component-architecture.md) for component design decisions and [ADR 0005](./ADR/0005-spacing-system.md) for spacing system architecture.
 
 ## For Agents
 

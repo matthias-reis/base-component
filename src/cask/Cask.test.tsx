@@ -176,4 +176,220 @@ describe("Cask Component", () => {
       expect(inner).toHaveTextContent("Nested content");
     });
   });
+
+  describe("Spacing Props", () => {
+    describe("Margin Props", () => {
+      it("applies margin prop correctly", () => {
+        render(
+          <Cask m="l" data-testid="cask">
+            Content
+          </Cask>
+        );
+        const element = screen.getByTestId("cask");
+        expect(element).toHaveStyle("margin: var(--spaceL)");
+      });
+
+      it("applies directional margin props correctly", () => {
+        render(
+          <Cask ml="s" mr="m" mt="l" mb="xl" data-testid="cask">
+            Content
+          </Cask>
+        );
+        const element = screen.getByTestId("cask");
+        expect(element).toHaveStyle({
+          "margin-left": "var(--spaceS)",
+          "margin-right": "var(--spaceM)",
+          "margin-top": "var(--spaceL)",
+          "margin-bottom": "var(--spaceXL)",
+        });
+      });
+
+      it("applies composite margin props (mx, my) correctly", () => {
+        render(
+          <Cask mx="m" my="l" data-testid="cask">
+            Content
+          </Cask>
+        );
+        const element = screen.getByTestId("cask");
+        expect(element).toHaveStyle({
+          "margin-left": "var(--spaceM)",
+          "margin-right": "var(--spaceM)",
+          "margin-top": "var(--spaceL)",
+          "margin-bottom": "var(--spaceL)",
+        });
+      });
+
+      it("individual margin props override composite ones", () => {
+        render(
+          <Cask mx="s" ml="xl" data-testid="cask">
+            Content
+          </Cask>
+        );
+        const element = screen.getByTestId("cask");
+        expect(element).toHaveStyle({
+          "margin-left": "var(--spaceXL)", // ml overrides mx
+          "margin-right": "var(--spaceS)", // from mx
+        });
+      });
+    });
+
+    describe("Padding Props", () => {
+      it("applies padding prop correctly", () => {
+        render(
+          <Cask p="xl" data-testid="cask">
+            Content
+          </Cask>
+        );
+        const element = screen.getByTestId("cask");
+        expect(element).toHaveStyle("padding: var(--spaceXL)");
+      });
+
+      it("applies directional padding props correctly", () => {
+        render(
+          <Cask pl="xs" pr="s" pt="m" pb="l" data-testid="cask">
+            Content
+          </Cask>
+        );
+        const element = screen.getByTestId("cask");
+        expect(element).toHaveStyle({
+          "padding-left": "var(--spaceXS)",
+          "padding-right": "var(--spaceS)",
+          "padding-top": "var(--spaceM)",
+          "padding-bottom": "var(--spaceL)",
+        });
+      });
+
+      it("applies composite padding props (px, py) correctly", () => {
+        render(
+          <Cask px="s" py="xl" data-testid="cask">
+            Content
+          </Cask>
+        );
+        const element = screen.getByTestId("cask");
+        expect(element).toHaveStyle({
+          "padding-left": "var(--spaceS)",
+          "padding-right": "var(--spaceS)",
+          "padding-top": "var(--spaceXL)",
+          "padding-bottom": "var(--spaceXL)",
+        });
+      });
+
+      it("individual padding props override composite ones", () => {
+        render(
+          <Cask py="m" pt="xxl" data-testid="cask">
+            Content
+          </Cask>
+        );
+        const element = screen.getByTestId("cask");
+        expect(element).toHaveStyle({
+          "padding-top": "var(--spaceXXL)", // pt overrides py
+          "padding-bottom": "var(--spaceM)", // from py
+        });
+      });
+    });
+
+    describe("Combined Spacing", () => {
+      it("applies both margin and padding props together", () => {
+        render(
+          <Cask m="s" p="l" data-testid="cask">
+            Content
+          </Cask>
+        );
+        const element = screen.getByTestId("cask");
+        expect(element).toHaveStyle({
+          margin: "var(--spaceS)",
+          padding: "var(--spaceL)",
+        });
+      });
+
+      it("handles zero spacing values", () => {
+        render(
+          <Cask m="0" p="1" data-testid="cask">
+            Content
+          </Cask>
+        );
+        const element = screen.getByTestId("cask");
+        expect(element).toHaveStyle({
+          margin: "var(--space0)",
+          padding: "var(--space)",
+        });
+      });
+
+      it("merges spacing styles with existing style prop", () => {
+        render(
+          <Cask
+            m="s"
+            style={{ color: "red", fontSize: "16px" }}
+            data-testid="cask"
+          >
+            Content
+          </Cask>
+        );
+        const element = screen.getByTestId("cask");
+        expect(element).toHaveStyle({
+          margin: "var(--spaceS)",
+          color: "rgb(255, 0, 0)",
+          fontSize: "16px",
+        });
+      });
+
+      it("existing style prop overrides spacing styles for same properties", () => {
+        render(
+          <Cask m="s" style={{ margin: "10px" }} data-testid="cask">
+            Content
+          </Cask>
+        );
+        const element = screen.getByTestId("cask");
+        expect(element).toHaveStyle("margin: 10px"); // style prop wins
+      });
+    });
+
+    describe("Polymorphic with Spacing", () => {
+      it("applies spacing props to different element types", () => {
+        render(
+          <Cask as="section" p="m" data-testid="cask">
+            Content
+          </Cask>
+        );
+        const element = screen.getByTestId("cask");
+        expect(element.tagName).toBe("SECTION");
+        expect(element).toHaveStyle("padding: var(--spaceM)");
+      });
+
+      it("applies spacing props to button elements", () => {
+        render(
+          <Cask as="button" mx="l" py="s" data-testid="cask">
+            Click me
+          </Cask>
+        );
+        const element = screen.getByTestId("cask");
+        expect(element.tagName).toBe("BUTTON");
+        expect(element).toHaveStyle({
+          "margin-left": "var(--spaceL)",
+          "margin-right": "var(--spaceL)",
+          "padding-top": "var(--spaceS)",
+          "padding-bottom": "var(--spaceS)",
+        });
+      });
+    });
+
+    describe("No Spacing Props", () => {
+      it("does not apply style attribute when no spacing props are provided", () => {
+        render(<Cask data-testid="cask">Content</Cask>);
+        const element = screen.getByTestId("cask");
+        expect(element).not.toHaveAttribute("style");
+      });
+
+      it("preserves existing style prop when no spacing props are provided", () => {
+        render(
+          <Cask style={{ color: "blue" }} data-testid="cask">
+            Content
+          </Cask>
+        );
+        const element = screen.getByTestId("cask");
+        expect(element).toHaveStyle("color: rgb(0, 0, 255)");
+        expect(element.style.margin).toBe(""); // No margin applied
+      });
+    });
+  });
 });
