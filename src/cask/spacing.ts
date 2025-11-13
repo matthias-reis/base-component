@@ -76,7 +76,49 @@ export function spacingValueToVar(value: SpacingValue): string {
 }
 
 /**
- * Generate CSS styles object for spacing props
+ * Generate CSS template literal string for spacing props
+ */
+export function generateSpacingCSS(props: SpacingProps): string {
+  const cssLines: string[] = []
+
+  // Process in consistent order for testing
+  // All margin props first
+  if (props.m) cssLines.push(`margin: ${spacingValueToVar(props.m)};`)
+  if (props.mx) {
+    cssLines.push(`margin-left: ${spacingValueToVar(props.mx)};`)
+    cssLines.push(`margin-right: ${spacingValueToVar(props.mx)};`)
+  }
+  if (props.my) {
+    cssLines.push(`margin-top: ${spacingValueToVar(props.my)};`)
+    cssLines.push(`margin-bottom: ${spacingValueToVar(props.my)};`)
+  }
+  // Individual margin props override composite ones
+  if (props.ml) cssLines.push(`margin-left: ${spacingValueToVar(props.ml)};`)
+  if (props.mr) cssLines.push(`margin-right: ${spacingValueToVar(props.mr)};`)
+  if (props.mt) cssLines.push(`margin-top: ${spacingValueToVar(props.mt)};`)
+  if (props.mb) cssLines.push(`margin-bottom: ${spacingValueToVar(props.mb)};`)
+
+  // All padding props second  
+  if (props.p) cssLines.push(`padding: ${spacingValueToVar(props.p)};`)
+  if (props.px) {
+    cssLines.push(`padding-left: ${spacingValueToVar(props.px)};`)
+    cssLines.push(`padding-right: ${spacingValueToVar(props.px)};`)
+  }
+  if (props.py) {
+    cssLines.push(`padding-top: ${spacingValueToVar(props.py)};`)
+    cssLines.push(`padding-bottom: ${spacingValueToVar(props.py)};`)
+  }
+  // Individual padding props override composite ones
+  if (props.pl) cssLines.push(`padding-left: ${spacingValueToVar(props.pl)};`)
+  if (props.pr) cssLines.push(`padding-right: ${spacingValueToVar(props.pr)};`)
+  if (props.pt) cssLines.push(`padding-top: ${spacingValueToVar(props.pt)};`)
+  if (props.pb) cssLines.push(`padding-bottom: ${spacingValueToVar(props.pb)};`)
+
+  return cssLines.join('\n  ')
+}
+
+/**
+ * Generate CSS styles object for spacing props (kept for backward compatibility)
  */
 export function generateSpacingStyles(props: SpacingProps): Record<string, string> {
   const styles: Record<string, string> = {}

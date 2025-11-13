@@ -1,5 +1,5 @@
 /// <reference types="vitest/globals" />
-import { spacingValueToVar, generateSpacingStyles } from './spacing'
+import { spacingValueToVar, generateSpacingStyles, generateSpacingCSS } from './spacing'
 
 describe('Spacing utilities', () => {
   describe('spacingValueToVar', () => {
@@ -135,6 +135,83 @@ describe('Spacing utilities', () => {
         margin: 'var(--space0)',
         padding: 'var(--space)'
       })
+    })
+  })
+
+  describe('generateSpacingCSS', () => {
+    it('generates no CSS for empty props', () => {
+      const css = generateSpacingCSS({})
+      expect(css).toBe('')
+    })
+
+    it('generates CSS for margin props', () => {
+      const css = generateSpacingCSS({ m: 'l' })
+      expect(css).toBe('margin: var(--spaceL);')
+    })
+
+    it('generates CSS for padding props', () => {
+      const css = generateSpacingCSS({ p: 'xl' })
+      expect(css).toBe('padding: var(--spaceXL);')
+    })
+
+    it('generates CSS for directional margin props', () => {
+      const css = generateSpacingCSS({
+        ml: 's',
+        mr: 'm',
+        mt: 'l',
+        mb: 'xl'
+      })
+      expect(css).toBe([
+        'margin-left: var(--spaceS);',
+        'margin-right: var(--spaceM);',
+        'margin-top: var(--spaceL);',
+        'margin-bottom: var(--spaceXL);'
+      ].join('\n  '))
+    })
+
+    it('generates CSS for composite props', () => {
+      const css = generateSpacingCSS({
+        mx: 'm',
+        py: 'l'
+      })
+      expect(css).toBe([
+        'margin-left: var(--spaceM);',
+        'margin-right: var(--spaceM);',
+        'padding-top: var(--spaceL);',
+        'padding-bottom: var(--spaceL);'
+      ].join('\n  '))
+    })
+
+    it('individual props override composite props in CSS', () => {
+      const css = generateSpacingCSS({
+        mx: 'm',    // Should be overridden by ml
+        ml: 'xl',   // Should override mx for left margin
+        py: 's',    // Should be overridden by pt
+        pt: 'l'     // Should override py for top padding
+      })
+      expect(css).toBe([
+        'margin-left: var(--spaceM);',  // from mx
+        'margin-right: var(--spaceM);', // from mx
+        'margin-left: var(--spaceXL);', // ml overrides mx
+        'padding-top: var(--spaceS);',  // from py
+        'padding-bottom: var(--spaceS);', // from py
+        'padding-top: var(--spaceL);'   // pt overrides py
+      ].join('\n  '))
+    })
+
+    it('generates CSS for all spacing props together', () => {
+      const css = generateSpacingCSS({
+        m: 'xs',
+        p: 's',
+        ml: 'l',
+        pt: 'xl'
+      })
+      expect(css).toBe([
+        'margin: var(--spaceXS);',
+        'margin-left: var(--spaceL);',
+        'padding: var(--spaceS);',
+        'padding-top: var(--spaceXL);'
+      ].join('\n  '))
     })
   })
 })
