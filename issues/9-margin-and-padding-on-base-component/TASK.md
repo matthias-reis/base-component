@@ -1,4 +1,4 @@
-# CurrentTask: Implement Task
+# CurrentTask: Work on Feedback for Implementation
 
 - **ID**: `#9`
 - **Title**: `Margin and Padding on base component`
@@ -6,22 +6,37 @@
 
 ## Task Description
 
-- A detailed plan has already been worked out in a previous step. Your task is to implement everything specified in `issues/9-margin-and-padding-on-base-component/PLAN.md`.
-- Modify only code/docs/tests required by the plan.
-- Create or update `issues/9-margin-and-padding-on-base-component/qa.md` with a consistent but minimal QA checklist / test plan. 
-  - Omit steps that are tested automatically (like linters)
-  - Try to create a recipe-like order starting with running the app locally, navigationg to a url, etc.
-- After the implementation, append a line to `issues/9-margin-and-padding-on-base-component/cost.md` with:
+- A detailed plan has already been worked out and implemented, see `issues/9-margin-and-padding-on-base-component/PLAN.md` for more details. But there is feedback to address.
+- Read the text below, especially the "Feedback Comments" and the "CI Status" section.
+- Ensure that all relevant feedback is addressed in the codebase.
+- Do **not** modify the plan.md as this has been previously approved.
+- Append a line to `issues/9-margin-and-padding-on-base-component/cost.md` with:
   - timestamp (UTC), provider, model, input_tokens, output_tokens, total_tokens, estUSD, headers snapshot (remaining/reset if available).
-- Do **not** change `PLAN.md`.
 - create a local commit if possible. If not propose a commit statement including message.
 
 
 ## Feedback Comments
 
+__Comment on src/cask/Cask.tsx line 34__ 
+IMPORTANT CHANGE:
+
+This was not the intention.
+Please name use of next Yak styling for applying those values. This is important because in the next step we are going to introduce mediaqueries, which don&#39;t work with inline styles.
+
+So to make it clear:
+
+`pb=&#39;s&#39;` applies a style like
+
+```
+css`
+  padding-bottom: var(--spaceS);
+`
+```.
+
 
 
 ## Pull Request Information
+
 - **PR ID**: `#10`
 - **Title**: `agent(#9): Margin and Padding on base component`
 - **State**: `open`
