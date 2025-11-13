@@ -39,9 +39,26 @@ docs/
 
 ## Acceptance Criteria
 
-1. **CSS Variables**: All spacing values defined in `global.css` as CSS custom properties
+1. **CSS Variables**: All spacing values defined in `global.css` as CSS custom properties with the following scale:
+
+   | Prop Value | CSS Variable | Pixel Value |
+   |------------|-------------|-------------|
+   | `0`        | `--space0`   | `0`         |
+   | `1`        | `--space`    | `1px`       |
+   | `xxs`      | `--spaceXXS` | `2px`       |
+   | `xs`       | `--spaceXS`  | `4px`       |
+   | `s`        | `--spaceS`   | `8px`       |
+   | `m`        | `--spaceM`   | `12px`      |
+   | `l`        | `--spaceL`   | `16px`      |
+   | `xl`       | `--spaceXL`  | `24px`      |
+   | `xxl`      | `--spaceXXL` | `32px`      |
+   | `3xl`      | `--space3XL` | `48px`      |
+   | `4xl`      | `--space4XL` | `68px`      |
+   | `5xl`      | `--space5XL` | `92px`      |
+   | `6xl`      | `--space6XL` | `122px`     |
+
 2. **Prop Interface**: Support all 14 spacing props (`m`, `ml`, `mr`, `mt`, `mb`, `mx`, `my`, `p`, `pl`, `pr`, `pt`, `pb`, `px`, `py`)
-3. **Value Scale**: Accept 12 predefined spacing values: `0`, `xxs`, `xs`, `s`, `m`, `l`, `xl`, `xxl`, `3xl`, `4xl`, `5xl`, `6xl`
+3. **Value Scale**: Accept 13 predefined spacing values: `0`, `1`, `xxs`, `xs`, `s`, `m`, `l`, `xl`, `xxl`, `3xl`, `4xl`, `5xl`, `6xl`
 4. **Type Safety**: Full TypeScript support with intellisense for prop names and values
 5. **CSS Generation**: Use Next Yak for compile-time CSS extraction
 6. **Backward Compatibility**: Existing Cask functionality remains unchanged
