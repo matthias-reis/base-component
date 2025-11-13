@@ -1,8 +1,10 @@
+import { Cask } from "@/cask";
 import { styled } from "next-yak";
 
-const Card = styled.div`
+const Card = styled(Cask).attrs({
+  p: "lg",
+})`
   border: 1px solid grey;
-  padding: 1rem;
   border-radius: 1rem;
 `;
 

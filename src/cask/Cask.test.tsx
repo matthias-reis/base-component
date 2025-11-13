@@ -186,6 +186,7 @@ describe("Cask Component", () => {
           </Cask>
         );
         const element = screen.getByTestId("cask");
+        // Check that spacing styles were applied
         expect(element).toHaveStyle("margin: var(--spaceL)");
       });
 
@@ -196,11 +197,12 @@ describe("Cask Component", () => {
           </Cask>
         );
         const element = screen.getByTestId("cask");
+        // Check that spacing styles were applied
         expect(element).toHaveStyle({
-          "margin-left": "var(--spaceS)",
-          "margin-right": "var(--spaceM)",
-          "margin-top": "var(--spaceL)",
-          "margin-bottom": "var(--spaceXL)",
+          marginLeft: "var(--spaceS)",
+          marginRight: "var(--spaceM)",
+          marginTop: "var(--spaceL)",
+          marginBottom: "var(--spaceXL)"
         });
       });
 
@@ -211,11 +213,12 @@ describe("Cask Component", () => {
           </Cask>
         );
         const element = screen.getByTestId("cask");
+        // Check that spacing styles were applied
         expect(element).toHaveStyle({
-          "margin-left": "var(--spaceM)",
-          "margin-right": "var(--spaceM)",
-          "margin-top": "var(--spaceL)",
-          "margin-bottom": "var(--spaceL)",
+          marginLeft: "var(--spaceM)",
+          marginRight: "var(--spaceM)",
+          marginTop: "var(--spaceL)",
+          marginBottom: "var(--spaceL)"
         });
       });
 
@@ -226,9 +229,10 @@ describe("Cask Component", () => {
           </Cask>
         );
         const element = screen.getByTestId("cask");
+        // Check that spacing styles were applied with override
         expect(element).toHaveStyle({
-          "margin-left": "var(--spaceXL)", // ml overrides mx
-          "margin-right": "var(--spaceS)", // from mx
+          marginLeft: "var(--spaceXL)", // ml overrides mx
+          marginRight: "var(--spaceS)"  // from mx
         });
       });
     });
@@ -241,6 +245,7 @@ describe("Cask Component", () => {
           </Cask>
         );
         const element = screen.getByTestId("cask");
+        // Check that spacing styles were applied
         expect(element).toHaveStyle("padding: var(--spaceXL)");
       });
 
@@ -251,11 +256,12 @@ describe("Cask Component", () => {
           </Cask>
         );
         const element = screen.getByTestId("cask");
+        // Check that spacing styles were applied
         expect(element).toHaveStyle({
-          "padding-left": "var(--spaceXS)",
-          "padding-right": "var(--spaceS)",
-          "padding-top": "var(--spaceM)",
-          "padding-bottom": "var(--spaceL)",
+          paddingLeft: "var(--spaceXS)",
+          paddingRight: "var(--spaceS)",
+          paddingTop: "var(--spaceM)",
+          paddingBottom: "var(--spaceL)"
         });
       });
 
@@ -266,11 +272,12 @@ describe("Cask Component", () => {
           </Cask>
         );
         const element = screen.getByTestId("cask");
+        // Check that spacing styles were applied
         expect(element).toHaveStyle({
-          "padding-left": "var(--spaceS)",
-          "padding-right": "var(--spaceS)",
-          "padding-top": "var(--spaceXL)",
-          "padding-bottom": "var(--spaceXL)",
+          paddingLeft: "var(--spaceS)",
+          paddingRight: "var(--spaceS)",
+          paddingTop: "var(--spaceXL)",
+          paddingBottom: "var(--spaceXL)"
         });
       });
 
@@ -281,9 +288,10 @@ describe("Cask Component", () => {
           </Cask>
         );
         const element = screen.getByTestId("cask");
+        // Check that spacing styles were applied with override
         expect(element).toHaveStyle({
-          "padding-top": "var(--spaceXXL)", // pt overrides py
-          "padding-bottom": "var(--spaceM)", // from py
+          paddingTop: "var(--spaceXXL)", // pt overrides py
+          paddingBottom: "var(--spaceM)"  // from py
         });
       });
     });
@@ -296,9 +304,10 @@ describe("Cask Component", () => {
           </Cask>
         );
         const element = screen.getByTestId("cask");
+        // Check that spacing styles were applied
         expect(element).toHaveStyle({
           margin: "var(--spaceS)",
-          padding: "var(--spaceL)",
+          padding: "var(--spaceL)"
         });
       });
 
@@ -309,9 +318,10 @@ describe("Cask Component", () => {
           </Cask>
         );
         const element = screen.getByTestId("cask");
+        // Check that spacing styles were applied
         expect(element).toHaveStyle({
           margin: "var(--space0)",
-          padding: "var(--space)",
+          padding: "var(--space)"
         });
       });
 
@@ -326,6 +336,7 @@ describe("Cask Component", () => {
           </Cask>
         );
         const element = screen.getByTestId("cask");
+        // Both spacing and style prop styles should be applied
         expect(element).toHaveStyle({
           margin: "var(--spaceS)",
           color: "rgb(255, 0, 0)",
@@ -340,7 +351,8 @@ describe("Cask Component", () => {
           </Cask>
         );
         const element = screen.getByTestId("cask");
-        expect(element).toHaveStyle("margin: 10px"); // style prop wins
+        // Style prop should override spacing styles
+        expect(element).toHaveStyle("margin: 10px");
       });
     });
 
@@ -353,6 +365,7 @@ describe("Cask Component", () => {
         );
         const element = screen.getByTestId("cask");
         expect(element.tagName).toBe("SECTION");
+        // Check that spacing styles were applied
         expect(element).toHaveStyle("padding: var(--spaceM)");
       });
 
@@ -364,11 +377,12 @@ describe("Cask Component", () => {
         );
         const element = screen.getByTestId("cask");
         expect(element.tagName).toBe("BUTTON");
+        // Check that spacing styles were applied
         expect(element).toHaveStyle({
-          "margin-left": "var(--spaceL)",
-          "margin-right": "var(--spaceL)",
-          "padding-top": "var(--spaceS)",
-          "padding-bottom": "var(--spaceS)",
+          marginLeft: "var(--spaceL)",
+          marginRight: "var(--spaceL)",
+          paddingTop: "var(--spaceS)",
+          paddingBottom: "var(--spaceS)"
         });
       });
     });

@@ -1,3 +1,4 @@
+import { Cask } from "@/cask/Cask";
 import Card from "../components/Card";
 
 export default function Home() {
@@ -5,8 +6,10 @@ export default function Home() {
     <div>
       <h1>&lt;Cask/&gt; - The Crate Base Component</h1>
 
+      <Cask p="xl">Test Cask</Cask>
+
       <div>
-        <Card>
+        <Card p="lg">
           <h2>Regular Content</h2>
           <p>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do

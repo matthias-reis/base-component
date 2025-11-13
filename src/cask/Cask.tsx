@@ -1,5 +1,4 @@
-import type { ComponentProps, ElementType, ReactNode } from 'react'
-import { styled } from 'next-yak'
+import type { ComponentProps, ElementType, ReactNode, CSSProperties } from 'react'
 import { SpacingProps, spacingValueToVar } from './spacing'
 
 type PolymorphicProps<T extends ElementType = ElementType> = {
@@ -7,48 +6,49 @@ type PolymorphicProps<T extends ElementType = ElementType> = {
   children?: ReactNode
 } & ComponentProps<T> & SpacingProps
 
-// Create a styled component that handles all spacing
-const StyledElement = styled.div<{ $spacing: SpacingProps }>`
-  ${({ $spacing }) => {
-    const styles: string[] = []
-    
-    // Margin props
-    if ($spacing.m) styles.push(`margin: ${spacingValueToVar($spacing.m)};`)
-    if ($spacing.mx) {
-      styles.push(`margin-left: ${spacingValueToVar($spacing.mx)};`)
-      styles.push(`margin-right: ${spacingValueToVar($spacing.mx)};`)
-    }
-    if ($spacing.my) {
-      styles.push(`margin-top: ${spacingValueToVar($spacing.my)};`)
-      styles.push(`margin-bottom: ${spacingValueToVar($spacing.my)};`)
-    }
-    if ($spacing.ml) styles.push(`margin-left: ${spacingValueToVar($spacing.ml)};`)
-    if ($spacing.mr) styles.push(`margin-right: ${spacingValueToVar($spacing.mr)};`)
-    if ($spacing.mt) styles.push(`margin-top: ${spacingValueToVar($spacing.mt)};`)
-    if ($spacing.mb) styles.push(`margin-bottom: ${spacingValueToVar($spacing.mb)};`)
+// Generate spacing styles using CSS variables (Next Yak compatible)
+function generateSpacingStyles(spacing: SpacingProps): CSSProperties {
+  const styles: CSSProperties = {}
+  
+  // Margin props
+  if (spacing.m) styles.margin = spacingValueToVar(spacing.m)
+  if (spacing.mx) {
+    styles.marginLeft = spacingValueToVar(spacing.mx)
+    styles.marginRight = spacingValueToVar(spacing.mx)
+  }
+  if (spacing.my) {
+    styles.marginTop = spacingValueToVar(spacing.my)
+    styles.marginBottom = spacingValueToVar(spacing.my)
+  }
+  // Individual margin props override composite ones
+  if (spacing.ml) styles.marginLeft = spacingValueToVar(spacing.ml)
+  if (spacing.mr) styles.marginRight = spacingValueToVar(spacing.mr)
+  if (spacing.mt) styles.marginTop = spacingValueToVar(spacing.mt)
+  if (spacing.mb) styles.marginBottom = spacingValueToVar(spacing.mb)
 
-    // Padding props  
-    if ($spacing.p) styles.push(`padding: ${spacingValueToVar($spacing.p)};`)
-    if ($spacing.px) {
-      styles.push(`padding-left: ${spacingValueToVar($spacing.px)};`)
-      styles.push(`padding-right: ${spacingValueToVar($spacing.px)};`)
-    }
-    if ($spacing.py) {
-      styles.push(`padding-top: ${spacingValueToVar($spacing.py)};`)
-      styles.push(`padding-bottom: ${spacingValueToVar($spacing.py)};`)
-    }
-    if ($spacing.pl) styles.push(`padding-left: ${spacingValueToVar($spacing.pl)};`)
-    if ($spacing.pr) styles.push(`padding-right: ${spacingValueToVar($spacing.pr)};`)
-    if ($spacing.pt) styles.push(`padding-top: ${spacingValueToVar($spacing.pt)};`)
-    if ($spacing.pb) styles.push(`padding-bottom: ${spacingValueToVar($spacing.pb)};`)
+  // Padding props  
+  if (spacing.p) styles.padding = spacingValueToVar(spacing.p)
+  if (spacing.px) {
+    styles.paddingLeft = spacingValueToVar(spacing.px)
+    styles.paddingRight = spacingValueToVar(spacing.px)
+  }
+  if (spacing.py) {
+    styles.paddingTop = spacingValueToVar(spacing.py)
+    styles.paddingBottom = spacingValueToVar(spacing.py)
+  }
+  // Individual padding props override composite ones
+  if (spacing.pl) styles.paddingLeft = spacingValueToVar(spacing.pl)
+  if (spacing.pr) styles.paddingRight = spacingValueToVar(spacing.pr)
+  if (spacing.pt) styles.paddingTop = spacingValueToVar(spacing.pt)
+  if (spacing.pb) styles.paddingBottom = spacingValueToVar(spacing.pb)
 
-    return styles.join('\n  ')
-  }}
-`
+  return styles
+}
 
 export function Cask<T extends ElementType = 'div'>({
   as,
   children,
+  style,
   // Spacing props
   m, ml, mr, mt, mb, mx, my,
   p, pl, pr, pt, pb, px, py,
@@ -59,25 +59,23 @@ export function Cask<T extends ElementType = 'div'>({
   // Extract spacing props
   const spacingProps = { m, ml, mr, mt, mb, mx, my, p, pl, pr, pt, pb, px, py }
   
-  // Check if any spacing props are defined
-  const hasSpacing = Object.values(spacingProps).some(value => value !== undefined)
+  // Generate spacing styles using CSS variables
+  const spacingStyles = generateSpacingStyles(spacingProps)
   
-  // If we have spacing props, use the styled component
-  if (hasSpacing) {
-    return (
-      <StyledElement 
-        as={Component}
-        $spacing={spacingProps}
-        {...props}
-      >
-        {children}
-      </StyledElement>
-    )
+  // Merge with existing style prop (style prop takes precedence)
+  const mergedStyle = {
+    ...spacingStyles,
+    ...style,
   }
   
-  // Otherwise use the regular component
+  // Only apply style if we have styles to apply
+  const finalStyle = Object.keys(mergedStyle).length > 0 ? mergedStyle : undefined
+  
   return (
-    <Component {...props}>
+    <Component 
+      style={finalStyle}
+      {...props}
+    >
       {children}
     </Component>
   )
