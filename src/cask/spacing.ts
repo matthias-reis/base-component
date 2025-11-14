@@ -76,7 +76,105 @@ export function spacingValueToVar(value: SpacingValue): string {
 }
 
 /**
- * Generate CSS template literal string for spacing props
+ * Generate margin CSS based on spacing value
+ */
+export function getMarginCSS(value: SpacingValue): string {
+  switch (value) {
+    case '0': return `margin: var(--space0);`
+    case '1': return `margin: var(--space);`
+    case 'xxs': return `margin: var(--spaceXXS);`
+    case 'xs': return `margin: var(--spaceXS);`
+    case 's': return `margin: var(--spaceS);`
+    case 'm': return `margin: var(--spaceM);`
+    case 'l': return `margin: var(--spaceL);`
+    case 'xl': return `margin: var(--spaceXL);`
+    case 'xxl': return `margin: var(--spaceXXL);`
+    case '3xl': return `margin: var(--space3XL);`
+    case '4xl': return `margin: var(--space4XL);`
+    case '5xl': return `margin: var(--space5XL);`
+    case '6xl': return `margin: var(--space6XL);`
+  }
+}
+
+/**
+ * Generate padding CSS based on spacing value
+ */
+export function getPaddingCSS(value: SpacingValue): string {
+  switch (value) {
+    case '0': return `padding: var(--space0);`
+    case '1': return `padding: var(--space);`
+    case 'xxs': return `padding: var(--spaceXXS);`
+    case 'xs': return `padding: var(--spaceXS);`
+    case 's': return `padding: var(--spaceS);`
+    case 'm': return `padding: var(--spaceM);`
+    case 'l': return `padding: var(--spaceL);`
+    case 'xl': return `padding: var(--spaceXL);`
+    case 'xxl': return `padding: var(--spaceXXL);`
+    case '3xl': return `padding: var(--space3XL);`
+    case '4xl': return `padding: var(--space4XL);`
+    case '5xl': return `padding: var(--space5XL);`
+    case '6xl': return `padding: var(--space6XL);`
+  }
+}
+
+/**
+ * Generate margin-left CSS based on spacing value
+ */
+export function getMarginLeftCSS(value: SpacingValue): string {
+  return `margin-left: ${spacingValueToVar(value)};`
+}
+
+/**
+ * Generate margin-right CSS based on spacing value
+ */
+export function getMarginRightCSS(value: SpacingValue): string {
+  return `margin-right: ${spacingValueToVar(value)};`
+}
+
+/**
+ * Generate margin-top CSS based on spacing value
+ */
+export function getMarginTopCSS(value: SpacingValue): string {
+  return `margin-top: ${spacingValueToVar(value)};`
+}
+
+/**
+ * Generate margin-bottom CSS based on spacing value
+ */
+export function getMarginBottomCSS(value: SpacingValue): string {
+  return `margin-bottom: ${spacingValueToVar(value)};`
+}
+
+/**
+ * Generate padding-left CSS based on spacing value
+ */
+export function getPaddingLeftCSS(value: SpacingValue): string {
+  return `padding-left: ${spacingValueToVar(value)};`
+}
+
+/**
+ * Generate padding-right CSS based on spacing value
+ */
+export function getPaddingRightCSS(value: SpacingValue): string {
+  return `padding-right: ${spacingValueToVar(value)};`
+}
+
+/**
+ * Generate padding-top CSS based on spacing value
+ */
+export function getPaddingTopCSS(value: SpacingValue): string {
+  return `padding-top: ${spacingValueToVar(value)};`
+}
+
+/**
+ * Generate padding-bottom CSS based on spacing value
+ */
+export function getPaddingBottomCSS(value: SpacingValue): string {
+  return `padding-bottom: ${spacingValueToVar(value)};`
+}
+
+/**
+ * Generate CSS template literal string for spacing props (deprecated - use generateSpacingMixin for Next Yak)
  */
 export function generateSpacingCSS(props: SpacingProps): string {
   const cssLines: string[] = []

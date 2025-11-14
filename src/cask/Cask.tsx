@@ -1,82 +1,260 @@
-import type { ComponentProps, ElementType, ReactNode, CSSProperties } from 'react'
-import { SpacingProps, spacingValueToVar } from './spacing'
+import type { ComponentProps, ElementType, ReactNode } from 'react'
+import { styled, css } from 'next-yak'
+import { 
+  SpacingProps, 
+  getMarginCSS, 
+  getPaddingCSS, 
+  getMarginLeftCSS,
+  getMarginRightCSS,
+  getMarginTopCSS,
+  getMarginBottomCSS,
+  getPaddingLeftCSS,
+  getPaddingRightCSS,
+  getPaddingTopCSS,
+  getPaddingBottomCSS,
+  spacingValueToVar
+} from './spacing'
 
 type PolymorphicProps<T extends ElementType = ElementType> = {
   as?: T
   children?: ReactNode
 } & ComponentProps<T> & SpacingProps
 
-// Generate spacing styles using CSS variables (Next Yak compatible)
-function generateSpacingStyles(spacing: SpacingProps): CSSProperties {
-  const styles: CSSProperties = {}
+const StyledCask = styled.div<SpacingProps>`
+  ${(props) => {
+    // All margin props first
+    if (props.m) {
+      return css`${getMarginCSS(props.m)}`
+    }
+  }}
   
-  // Margin props
-  if (spacing.m) styles.margin = spacingValueToVar(spacing.m)
-  if (spacing.mx) {
-    styles.marginLeft = spacingValueToVar(spacing.mx)
-    styles.marginRight = spacingValueToVar(spacing.mx)
-  }
-  if (spacing.my) {
-    styles.marginTop = spacingValueToVar(spacing.my)
-    styles.marginBottom = spacingValueToVar(spacing.my)
-  }
-  // Individual margin props override composite ones
-  if (spacing.ml) styles.marginLeft = spacingValueToVar(spacing.ml)
-  if (spacing.mr) styles.marginRight = spacingValueToVar(spacing.mr)
-  if (spacing.mt) styles.marginTop = spacingValueToVar(spacing.mt)
-  if (spacing.mb) styles.marginBottom = spacingValueToVar(spacing.mb)
+  ${(props) => {
+    // Margin inline (mx) - applies to left and right
+    if (props.mx) {
+      return css`
+        margin-left: ${spacingValueToVar(props.mx)};
+        margin-right: ${spacingValueToVar(props.mx)};
+      `
+    }
+  }}
+  
+  ${(props) => {
+    // Margin block (my) - applies to top and bottom
+    if (props.my) {
+      return css`
+        margin-top: ${spacingValueToVar(props.my)};
+        margin-bottom: ${spacingValueToVar(props.my)};
+      `
+    }
+  }}
+  
+  ${(props) => {
+    // Individual margin props override composite ones
+    if (props.ml) {
+      return css`${getMarginLeftCSS(props.ml)}`
+    }
+  }}
+  
+  ${(props) => {
+    if (props.mr) {
+      return css`${getMarginRightCSS(props.mr)}`
+    }
+  }}
+  
+  ${(props) => {
+    if (props.mt) {
+      return css`${getMarginTopCSS(props.mt)}`
+    }
+  }}
+  
+  ${(props) => {
+    if (props.mb) {
+      return css`${getMarginBottomCSS(props.mb)}`
+    }
+  }}
 
-  // Padding props  
-  if (spacing.p) styles.padding = spacingValueToVar(spacing.p)
-  if (spacing.px) {
-    styles.paddingLeft = spacingValueToVar(spacing.px)
-    styles.paddingRight = spacingValueToVar(spacing.px)
-  }
-  if (spacing.py) {
-    styles.paddingTop = spacingValueToVar(spacing.py)
-    styles.paddingBottom = spacingValueToVar(spacing.py)
-  }
-  // Individual padding props override composite ones
-  if (spacing.pl) styles.paddingLeft = spacingValueToVar(spacing.pl)
-  if (spacing.pr) styles.paddingRight = spacingValueToVar(spacing.pr)
-  if (spacing.pt) styles.paddingTop = spacingValueToVar(spacing.pt)
-  if (spacing.pb) styles.paddingBottom = spacingValueToVar(spacing.pb)
-
-  return styles
-}
+  ${(props) => {
+    // All padding props
+    if (props.p) {
+      return css`${getPaddingCSS(props.p)}`
+    }
+  }}
+  
+  ${(props) => {
+    // Padding inline (px) - applies to left and right
+    if (props.px) {
+      return css`
+        padding-left: ${spacingValueToVar(props.px)};
+        padding-right: ${spacingValueToVar(props.px)};
+      `
+    }
+  }}
+  
+  ${(props) => {
+    // Padding block (py) - applies to top and bottom  
+    if (props.py) {
+      return css`
+        padding-top: ${spacingValueToVar(props.py)};
+        padding-bottom: ${spacingValueToVar(props.py)};
+      `
+    }
+  }}
+  
+  ${(props) => {
+    // Individual padding props override composite ones
+    if (props.pl) {
+      return css`${getPaddingLeftCSS(props.pl)}`
+    }
+  }}
+  
+  ${(props) => {
+    if (props.pr) {
+      return css`${getPaddingRightCSS(props.pr)}`
+    }
+  }}
+  
+  ${(props) => {
+    if (props.pt) {
+      return css`${getPaddingTopCSS(props.pt)}`
+    }
+  }}
+  
+  ${(props) => {
+    if (props.pb) {
+      return css`${getPaddingBottomCSS(props.pb)}`
+    }
+  }}
+`
 
 export function Cask<T extends ElementType = 'div'>({
   as,
   children,
-  style,
   // Spacing props
   m, ml, mr, mt, mb, mx, my,
   p, pl, pr, pt, pb, px, py,
   ...props
 }: PolymorphicProps<T>) {
-  const Component = as || 'div'
-  
   // Extract spacing props
   const spacingProps = { m, ml, mr, mt, mb, mx, my, p, pl, pr, pt, pb, px, py }
   
-  // Generate spacing styles using CSS variables
-  const spacingStyles = generateSpacingStyles(spacingProps)
-  
-  // Merge with existing style prop (style prop takes precedence)
-  const mergedStyle = {
-    ...spacingStyles,
-    ...style,
+  if (as) {
+    // For polymorphic usage, we need to use styled with the specific component
+    const StyledPolymorphic = styled(as as any)<SpacingProps>`
+      ${(props) => {
+        // All margin props first
+        if (props.m) {
+          return css`${getMarginCSS(props.m)}`
+        }
+      }}
+      
+      ${(props) => {
+        // Margin inline (mx) - applies to left and right
+        if (props.mx) {
+          return css`
+            margin-left: ${spacingValueToVar(props.mx)};
+            margin-right: ${spacingValueToVar(props.mx)};
+          `
+        }
+      }}
+      
+      ${(props) => {
+        // Margin block (my) - applies to top and bottom
+        if (props.my) {
+          return css`
+            margin-top: ${spacingValueToVar(props.my)};
+            margin-bottom: ${spacingValueToVar(props.my)};
+          `
+        }
+      }}
+      
+      ${(props) => {
+        // Individual margin props override composite ones
+        if (props.ml) {
+          return css`${getMarginLeftCSS(props.ml)}`
+        }
+      }}
+      
+      ${(props) => {
+        if (props.mr) {
+          return css`${getMarginRightCSS(props.mr)}`
+        }
+      }}
+      
+      ${(props) => {
+        if (props.mt) {
+          return css`${getMarginTopCSS(props.mt)}`
+        }
+      }}
+      
+      ${(props) => {
+        if (props.mb) {
+          return css`${getMarginBottomCSS(props.mb)}`
+        }
+      }}
+
+      ${(props) => {
+        // All padding props
+        if (props.p) {
+          return css`${getPaddingCSS(props.p)}`
+        }
+      }}
+      
+      ${(props) => {
+        // Padding inline (px) - applies to left and right
+        if (props.px) {
+          return css`
+            padding-left: ${spacingValueToVar(props.px)};
+            padding-right: ${spacingValueToVar(props.px)};
+          `
+        }
+      }}
+      
+      ${(props) => {
+        // Padding block (py) - applies to top and bottom  
+        if (props.py) {
+          return css`
+            padding-top: ${spacingValueToVar(props.py)};
+            padding-bottom: ${spacingValueToVar(props.py)};
+          `
+        }
+      }}
+      
+      ${(props) => {
+        // Individual padding props override composite ones
+        if (props.pl) {
+          return css`${getPaddingLeftCSS(props.pl)}`
+        }
+      }}
+      
+      ${(props) => {
+        if (props.pr) {
+          return css`${getPaddingRightCSS(props.pr)}`
+        }
+      }}
+      
+      ${(props) => {
+        if (props.pt) {
+          return css`${getPaddingTopCSS(props.pt)}`
+        }
+      }}
+      
+      ${(props) => {
+        if (props.pb) {
+          return css`${getPaddingBottomCSS(props.pb)}`
+        }
+      }}
+    `
+    
+    return (
+      <StyledPolymorphic {...spacingProps} {...props}>
+        {children}
+      </StyledPolymorphic>
+    )
   }
   
-  // Only apply style if we have styles to apply
-  const finalStyle = Object.keys(mergedStyle).length > 0 ? mergedStyle : undefined
-  
   return (
-    <Component 
-      style={finalStyle}
-      {...props}
-    >
+    <StyledCask {...spacingProps} {...props}>
       {children}
-    </Component>
+    </StyledCask>
   )
 }
